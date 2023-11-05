@@ -7,7 +7,7 @@ function Profile() {
     
 return (
     <main className="profile">
-        <div className="profile__container">
+        <section className="profile__container">
             <h1 className="profile__title">Привет, Виталий!</h1>
             <form className="profile__form" name="profile">
                 <div className="profile__input-container">
@@ -18,6 +18,8 @@ return (
                             type="text"
                             name="name"
                             placeholder="Имя"
+                            minLength="2"
+                            maxLength="30"
                             required
                         />
                     </label>
@@ -28,6 +30,8 @@ return (
                             type="email"
                             name="email"
                             placeholder="E-mail"
+                            minLength="2"
+                            maxLength="30"
                             required
                         />
                     </label>
@@ -35,11 +39,9 @@ return (
             </form>
             <div className="profile__buttons-container">
                 <button className="profile__button-edit" type="submit">Редактировать</button>
-                <button className="profile__button-exit" type="submit">
-                    <Link to="/" className="profile__link">Выйти из аккаунта</Link>
-                </button>
+                <Link to="/" className="profile__link">Выйти из аккаунта</Link>
             </div>
-        </div>
+        </section>
     </main>
 );
 }

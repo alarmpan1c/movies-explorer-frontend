@@ -161,7 +161,7 @@
 
 @media screen and (max-width: 600px) {
     .about-me__container {
-        padding: 70px 14px;
+        padding: 62px 14px;
     }
     
     .about-me__info-container {
@@ -181,13 +181,13 @@
     .about-me__name {
         font-size: 30px;
         letter-spacing: -1.2px;
-        padding-bottom: 20px;
+        padding-bottom: 17px;
     }
 
     .about-me__prof {
         font-size: 11px;
         line-height: 16px;
-        padding-bottom: 20px;
+        padding-bottom: 19px;
     }
 
     .about-me__text {

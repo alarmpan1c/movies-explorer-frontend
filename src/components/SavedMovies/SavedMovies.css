@@ -9,6 +9,12 @@
     margin: 0 70px;
 }
 
+.saved-movies__container {
+    width: 100%;
+    height: 215px;
+    background: #202020;
+}
+
 @media screen and (max-width: 1170px) {
     .saved-movies {
         max-width: 900px;
@@ -26,6 +32,10 @@
         max-width: 708px;
         margin: 0 30px;
     }
+
+    .saved-movies__container {
+        height: 167px;
+    }
 }
 
 @media screen and (max-width: 720px) {
@@ -39,4 +49,7 @@
         max-width: 300px;
     }
     
+    .saved-movies__container {
+        height: 142px;
+    }
 }
