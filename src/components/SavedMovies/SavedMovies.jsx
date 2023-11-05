@@ -8,6 +8,8 @@ return (
     <main className="saved-movies">
         <SearchForm />
         <MoviesCardList />
+        <div className="saved-movies__container">
+        </div>
     </main>
 );
 }

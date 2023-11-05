@@ -71,9 +71,11 @@
 @media screen and (max-width: 570px) {
     .search {
         max-width: 292px;
+        padding: 78px 0 40px;
     }
     
     .search__input {
         max-width: 238px;
+        padding: 14px 12px;
     }
 }

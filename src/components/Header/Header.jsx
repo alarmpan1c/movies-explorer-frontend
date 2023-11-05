@@ -31,7 +31,7 @@ return (
             <img src={logo} alt="Логотип" className="header__logo"/>
         </Link>
         <Navigation />
-        <button className="header__button" type="button"><Link to="/profile" className="header__button-link">Аккаунт</Link></button>
+        <Link to="/profile" className="header__button-link">Аккаунт</Link>
     </nav>}
     { isLoggedIn && windowSize.innerWidth <= 768 && <nav className="header__container">
         <Link to="/" className="header__link">
