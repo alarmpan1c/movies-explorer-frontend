@@ -3,3 +3,5 @@
 IP 130.193.34.102
   frontend: https://var.maximchuk.diplom.nomoredomainsrocks.ru
   beckend: https://api.var.maximchuk.diplom.nomoredomainsrocks.ru
+
+Ссылка на пул реквест: https://github.com/alarmpan1c/movies-explorer-frontend/pull/2
