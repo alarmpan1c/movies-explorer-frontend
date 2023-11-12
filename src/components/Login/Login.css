@@ -97,6 +97,14 @@
     transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
 }
 
+.login__input:invalid {
+    color: #EE3465;
+    outline: 2px solid #EE3465;
+    outline-offset: 2px;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.7); 
+    transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
 .login__buttons-container {
     display: flex;
     flex-direction: column;
@@ -138,6 +146,22 @@
     line-height: normal;
     padding-left: 6px;
     text-decoration: none;
+}
+
+.login__error {
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    color: #EE3465;
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.login__button_disabled {
+    background: #8B8B8B;
 }
 
 @media screen and (max-width: 768px) {

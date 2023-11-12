@@ -10,7 +10,6 @@ function Header({ isLoggedIn, openMenu }) {
     useEffect(() => {
         function handleWindowResize() {
             setWindowSize(getWindowSize());
-            console.log(windowSize);
         }
     
         window.addEventListener('resize', handleWindowResize);

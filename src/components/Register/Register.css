@@ -101,6 +101,10 @@
 
 .register__input:invalid {
     color: #EE3465;
+    outline: 2px solid #EE3465;
+    outline-offset: 2px;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.7); 
+    transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
 }
 
 .register__error {
@@ -137,6 +141,10 @@
     font-weight: 500;
     line-height: normal;
     cursor: pointer;
+}
+
+.register__button-submit_disabled {
+    background-color: #8B8B8B;
 }
 
 .register__button-submit:hover {
