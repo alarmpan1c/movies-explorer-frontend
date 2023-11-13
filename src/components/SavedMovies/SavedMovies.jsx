@@ -43,31 +43,24 @@ function SavedMovies({
       return movie.duration < 40;
     });
     if (!filterCheckbox) {
-      console.log("не фильтр");
       if (text) {
-        console.log("текст");
         search();
       } else {
-        console.log("не текст");
         setMovies(dataSavedMovies);
         localStorage.setItem("saveMovies", JSON.stringify(dataSavedMovies));
       }
     } else {
       if (text) {
-        console.log("текст");
         setMovies(movies.filter((movie) => movie.duration < 40));
         localStorage.setItem(
           "saveMovies",
           JSON.stringify(movies.filter((movie) => movie.duration < 40))
         );
       } else {
-        console.log("не текст");
         setMovies(shortMovies);
         localStorage.setItem("saveMovies", JSON.stringify(shortMovies));
       }
-      console.log("фильтр");
     }
-    console.log("мы тут");
   };
 
   useEffect(() => {

@@ -10,13 +10,10 @@ function MoviesCard({ movie, saveMovie, deleteMovie, isLiked }) {
   const [buttonClass, setButtonClass] = useState("");
 
   const handleLike = () => {
-    console.log("isDislike", isLike);
     if (isLike) {
-      console.log(movie);
       deleteMovie(movie);
       setIsLike(false);
     } else {
-      console.log("isLike", isLike);
       saveMovie(movie);
       setIsLike(true);
     }
@@ -28,7 +25,7 @@ function MoviesCard({ movie, saveMovie, deleteMovie, isLiked }) {
           className="movies-card__image"
           src={
             movie.notFound || 
-            ("https://api.nomoreparties.co" + (movie.image.url || movie.image))
+            ("https://api.nomoreparties.co" + (movie.image?.url || movie.image))
           }
           alt="Кадр из фильма"
           onMouseEnter={() => setButtonClass("movies-card__button_visible")}

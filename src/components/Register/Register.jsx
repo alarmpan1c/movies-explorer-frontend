@@ -12,7 +12,6 @@ function Register({ onRegister, isLoggedIn }) {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     onRegister(values);
   };
 

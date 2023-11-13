@@ -49,7 +49,6 @@ function App() {
     mainApi
       .authorization({ email, password })
       .then((res) => {
-        console.log(res);
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         navigate("/movies");
@@ -67,7 +66,6 @@ function App() {
     mainApi
       .registration({ email, password, name })
       .then((res) => {
-        console.log(res);
         login({ email, password });
       })
       .catch((err) => {
@@ -90,7 +88,6 @@ function App() {
       mainApi
         .getInfo(token)
         .then((res) => {
-          console.log(res);
           setIsLoggedIn(true);
         })
         .catch((err) => {
@@ -102,9 +99,8 @@ function App() {
   const saveMovie = (movie) => {
     // setIsLoading(true);
     mainApi
-      .addLikeonServer(movie, jwt)
+      .addLikeonServer(movie, localStorage.getItem("jwt"))
       .then((res) => {
-        console.log(res, "мы тут");
         setDataSavedMovies([...dataSavedMovies, res]);
       })
       .catch((err) => {
@@ -126,9 +122,8 @@ function App() {
     // setIsLoading(true);
     const _id = movie._id || findMovieId(movie);
     mainApi
-      .deleteLikeonServer(_id, jwt)
+      .deleteLikeonServer(_id, localStorage.getItem("jwt"))
       .then((res) => {
-        console.log(res);
         setDataSavedMovies(
           dataSavedMovies.filter((movie) => movie._id !== _id)
         );
@@ -142,12 +137,10 @@ function App() {
   };
 
   const editProfile = ({ name, email }) => {
-    console.log({ name, email });
     setIsLoading(true);
     mainApi
       .editInfoOnServer({ name, email }, jwt)
       .then((res) => {
-        console.log(res);
         setCurrentUser(res);
         setIsLucky(true);
       })
@@ -179,12 +172,11 @@ function App() {
         const [moviesResponse, savedMoviesResponse, userInfoResponse] =
           await Promise.all([
             moviesApi.getMovies(),
-            mainApi.getSavedMovies(jwt),
+            mainApi.getSavedMovies(localStorage.getItem("jwt")),
             mainApi.getInfo(localStorage.getItem("jwt")),
           ]);
-        console.log(savedMoviesResponse);
         setDataMovies(moviesResponse);
-        setDataSavedMovies(transformMoviesArray(savedMoviesResponse));
+        setDataSavedMovies(savedMoviesResponse);
         setCurrentUser(userInfoResponse);
         setIsLoggedIn(true);
       } catch (error) {
@@ -195,7 +187,7 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [isLoggedIn, jwt]);
 
   // useEffect(() => {
   //   checkLogin();

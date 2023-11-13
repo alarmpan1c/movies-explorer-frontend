@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 
 function MoviesCardList({ dataMovies, saveMovie, deleteMovie, isMovieInSavedMovies }) {
   const [displayCount, setDisplayCount] = useState(4); // Начальное количество карточек в ряду
-
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth >= 1170) {

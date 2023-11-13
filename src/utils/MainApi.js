@@ -35,7 +35,6 @@ class MainApi {
     });
   }
   addLikeonServer(movie, token) {
-    console.log(movie);
     const {
         country,
         director,
@@ -72,7 +71,6 @@ class MainApi {
     });
   }
   deleteLikeonServer(_id, token) {
-    console.log(_id, token);
     return this._request(`${this._url}/movies/${_id}`, {
       method: "DELETE",
       headers: {
@@ -82,7 +80,6 @@ class MainApi {
     });
   }
   editInfoOnServer(infoforServer, token) {
-    console.log(infoforServer, token);
     return this._request(`${this._url}/users/me`, {
       method: "PATCH",
       headers: {
@@ -103,7 +100,6 @@ class MainApi {
   }
 
   registration({password, email, name}) {
-    console.log({password, email, name})
     return fetch(`${this._url}/signup`, {
       method: "POST",
       headers: {

@@ -12,7 +12,6 @@ function Login({ onLogin, isLoggedIn }) {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     onLogin(values);
   };
 

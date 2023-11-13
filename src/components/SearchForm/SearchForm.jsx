@@ -17,6 +17,7 @@ function SearchForm({
         <form
           className="search__form"
           name="search"
+          noValidate
           onSubmit={(e) => {
             e.preventDefault();
             localStorage.setItem("search", text);

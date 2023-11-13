@@ -13,7 +13,6 @@ function Profile({ logout, editProfile }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     editProfile(values);
   };
 
