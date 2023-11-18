@@ -1,4 +1,5 @@
 import authorPic from '../../images/pic-author.png';
+import { GITHUB_LINK } from '../../utils/constants';
 
 import './AboutMe.css';
 
@@ -14,7 +15,7 @@ return (
                     <p className="about-me__prof">Фронтенд-разработчик, 30 лет</p>
                     <p className="about-me__text">Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена и&#160;дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал&#160;кодить. С&#160;2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
                     </p>
-                    <a className="about-me__link" href="https://github.com/alarmpan1c" title="GitHub" target="_blank" rel="noreferrer">GitHub</a>
+                    <a className="about-me__link" href={GITHUB_LINK} title="GitHub" target="_blank" rel="noreferrer">GitHub</a>
                 </div>
                 <img 
                     className="about-me__photo"

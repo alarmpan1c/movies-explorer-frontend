@@ -115,6 +115,10 @@
     .movies-card__button-delete {
         visibility: visible;
     }
+
+    .movies-card__button {
+        visibility: visible;
+    }
 }
 
 @media screen and (max-width: 570px) {
