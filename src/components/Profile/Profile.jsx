@@ -1,29 +1,63 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import CurrentUserContext from "../../context/CurrentUserContexts";
 import { useFormValidation } from "../../utils/helpers";
 
 import "./Profile.css";
 
-function Profile({ logout, editProfile }) {
+function Profile({ logout, editProfile, isLoggedIn }) {
   const currentUser = useContext(CurrentUserContext);
+  console.log(currentUser);
 
+  // const [nameIsEdited, setNameIsEdited] = useState(false);
+  // const [emailIsEdited, setEmailIsEdited] = useState(false);
+
+  const [isEdited, setIsEdited] = useState(false);
+  
   const { values, handleChange, errors, isValid, clearForm } =
-    useFormValidation();
+    useFormValidation({
+      name: currentUser.name || "",
+      email: currentUser.email || "",
+    });
+    console.log(values);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     editProfile(values);
   };
 
+  const checkIsEdited = (e) => {
+    handleChange(e);
+    // setIsEdited((prevIsEdited) => {
+    //   return values.name !== currentUser.name || values.email !== currentUser.email;
+    // });
+    console.log("---------------------------------------");
+    console.log("values", values);
+    console.log("isEdited", isEdited);
+    console.log("currentUser", currentUser);
+    console.log("---------------------------------------");
+  };
+
   useEffect(() => {
-    clearForm();
-  }, [clearForm]);
+    console.log(currentUser);
+    clearForm({
+      name: currentUser.name || "",
+      email: currentUser.email || "",
+    });
+  }, [clearForm, currentUser, isLoggedIn]);
+
+  useEffect(() => {
+    setIsEdited((prevIsEdited) => {
+      return values.name !== currentUser.name || values.email !== currentUser.email;
+    });
+  }, [values]);
 
   return (
     <main className="profile">
       <section className="profile__container">
-        <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
+        <h1 className="profile__title">{`Привет, ${
+          currentUser.name || ""
+        }!`}</h1>
         <form
           className="profile__form"
           name="profile"
@@ -37,11 +71,11 @@ function Profile({ logout, editProfile }) {
                 className="profile__input"
                 type="text"
                 name="name"
-                placeholder={`${currentUser.name}`}
+                placeholder={currentUser.name || ""}
                 minLength="2"
                 maxLength="30"
                 required
-                onChange={handleChange}
+                onChange={checkIsEdited}
                 value={values?.name || ""}
               />
             </label>
@@ -52,11 +86,11 @@ function Profile({ logout, editProfile }) {
                 className="profile__input"
                 type="email"
                 name="email"
-                placeholder={`${currentUser.email}`}
+                placeholder={currentUser.email || ""}
                 minLength="2"
                 maxLength="30"
                 required
-                onChange={handleChange}
+                onChange={checkIsEdited}
                 value={values?.email || ""}
               />
             </label>
@@ -66,11 +100,11 @@ function Profile({ logout, editProfile }) {
         <div className="profile__buttons-container">
           <button
             className={`profile__button-edit ${
-              !isValid && "profile__button-edit_disabled"
+              (!isValid || !isEdited) && "profile__button-edit_disabled"
             }`}
             type="submit"
             form="profile_form"
-            disabled={!isValid}
+            disabled={!isValid || !isEdited}
           >
             Редактировать
           </button>

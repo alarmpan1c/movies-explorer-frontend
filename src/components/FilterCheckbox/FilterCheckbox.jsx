@@ -1,10 +1,12 @@
 import "./FilterCheckbox.css";
+import { useLocation } from "react-router-dom";
 
 function FilterCheckbox({
   filterCheckbox,
   setFilterCheckbox,
   changeShortMovie,
 }) {
+  const location = useLocation();
   return (
     <label className="filtercheckbox">
       <input
@@ -12,8 +14,11 @@ function FilterCheckbox({
         className="filtercheckbox__input"
         checked={filterCheckbox}
         onChange={() => {
+          changeShortMovie(!filterCheckbox);
           setFilterCheckbox(!filterCheckbox);
-          localStorage.setItem("filterCheckbox", !filterCheckbox);
+          location.pathname === "/movies" &&
+            localStorage.setItem("filterCheckbox", !filterCheckbox ? true : "");
+          // localStorage.setItem("filterCheckbox", !filterCheckbox);
         }}
       ></input>
       <span className="filtercheckbox__check"></span>

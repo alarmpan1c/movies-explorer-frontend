@@ -111,6 +111,10 @@
     .movies-card__info {
         padding-top: 25px;
     }
+
+    .movies-card__button-delete {
+        visibility: visible;
+    }
 }
 
 @media screen and (max-width: 570px) {

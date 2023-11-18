@@ -24,7 +24,7 @@ import lucky from "../../images/lucky.png";
 import unlucky from "../../images/unlucky.png";
 
 function App() {
-  const [dataMovies, setDataMovies] = React.useState([]);
+  // const [dataMovies, setDataMovies] = React.useState([]);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isLoggedIn, setIsLoggedIn] = React.useState(
@@ -35,7 +35,9 @@ function App() {
   const [dataSavedMovies, setDataSavedMovies] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isResultPopupOpen, setIsResultPopupOpen] = React.useState(false);
-  const [isLucky, setIsLucky] = React.useState(false);
+  const [isLucky, setIsLucky] = React.useState(null);
+  // const [shortDataMovies, setShorDataMovies] = React.useState([]);
+  const [shortDataSavedMovies, setShorDataSavedMovies] = React.useState([]);
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
@@ -88,6 +90,9 @@ function App() {
       mainApi
         .getInfo(token)
         .then((res) => {
+          console.log(res);
+
+          setCurrentUser(res);
           setIsLoggedIn(true);
         })
         .catch((err) => {
@@ -96,12 +101,15 @@ function App() {
     }
   };
 
-  const saveMovie = (movie) => {
+  const saveMovie = (movie, reLike, likes) => {
     // setIsLoading(true);
     mainApi
       .addLikeonServer(movie, localStorage.getItem("jwt"))
       .then((res) => {
-        setDataSavedMovies([...dataSavedMovies, res]);
+        console.log("res", res);
+        console.log("likes", likes);
+        console.log("reLike", reLike);
+        reLike([...likes, res]);
       })
       .catch((err) => {
         console.log(err);
@@ -110,6 +118,10 @@ function App() {
         // setIsLoading(false);
       });
   };
+
+  // function reLike(makeNewArrey, res) {
+  //   makeNewArrey([...dataSavedMovies, res]);
+  // }
 
   function findMovieId(movie) {
     const foundMovie = dataSavedMovies.find(
@@ -167,27 +179,36 @@ function App() {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [moviesResponse, savedMoviesResponse, userInfoResponse] =
-          await Promise.all([
-            moviesApi.getMovies(),
-            mainApi.getSavedMovies(localStorage.getItem("jwt")),
-            mainApi.getInfo(localStorage.getItem("jwt")),
-          ]);
-        setDataMovies(moviesResponse);
+    setIsLoading(true);
+    isLoggedIn &&
+    Promise.all([
+      mainApi.getSavedMovies(localStorage.getItem("jwt")),
+    ])
+      .then(([
+        savedMoviesResponse, 
+      ]) => {
         setDataSavedMovies(savedMoviesResponse);
-        setCurrentUser(userInfoResponse);
+        setShorDataSavedMovies(savedMoviesResponse.filter((film) => film.duration < 40))
         setIsLoggedIn(true);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error(error);
-      } finally {
+      })
+      .finally(() => {
         setIsLoading(false);
-      }
-    };
+      });
+  }, [isLoggedIn]);
 
-    fetchData();
-  }, [isLoggedIn, jwt]);
+  useEffect(() => {
+    checkLogin();
+    // mainApi.getInfo(localStorage.getItem("jwt"))
+    // .then((res) => {
+    //   setCurrentUser(res);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
+  }, [])
 
   // useEffect(() => {
   //   checkLogin();
@@ -213,10 +234,16 @@ function App() {
               element={
                 <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Movies
-                    dataMovies={dataMovies}
+                    // dataMovies={dataMovies}
+                    // setDataMovies={setDataMovies}
                     saveMovie={saveMovie}
                     deleteMovie={deleteMovie}
                     isMovieInSavedMovies={isMovieInSavedMovies}
+                    isLoading={isLoading}
+                    dataSavedMovies={dataSavedMovies}
+                    setDataSavedMovies={setDataSavedMovies}
+                    // shortDataMovies={shortDataMovies}
+                    // setShorDataMovies={setShorDataMovies}
                   />
                 </ProtectedRoute>
               }
@@ -230,6 +257,9 @@ function App() {
                     deleteMovie={deleteMovie}
                     dataSavedMovies={dataSavedMovies}
                     isMovieInSavedMovies={isMovieInSavedMovies}
+                    isLoading={isLoading}
+                    shortDataSavedMovies={shortDataSavedMovies}
+                    setDataSavedMovies={setDataSavedMovies}
                   />
                 </ProtectedRoute>
               }
@@ -248,7 +278,7 @@ function App() {
               <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <>
                   <Header isLoggedIn={isLoggedIn} openMenu={openMenu} />
-                  <Profile logout={logout} editProfile={editProfile} />
+                  <Profile logout={logout} editProfile={editProfile} isLoggedIn={isLoggedIn} />
                 </>
               </ProtectedRoute>
             }

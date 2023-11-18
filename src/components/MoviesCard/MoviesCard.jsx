@@ -4,17 +4,32 @@ import { formatMinutes } from "../../utils/helpers";
 
 import "./MoviesCard.css";
 
-function MoviesCard({ movie, saveMovie, deleteMovie, isLiked }) {
+function MoviesCard({
+  movie,
+  saveMovie,
+  deleteMovie,
+  isLiked,
+  setDataMovies,
+  dataMovies,
+  dataSavedMovies,
+  setDataSavedMovies,
+}) {
   const [isLike, setIsLike] = useState(isLiked);
   const location = useLocation();
   const [buttonClass, setButtonClass] = useState("");
+
+  console.log(movie); 
+  console.log(!isLike && movie.nameRU !== "Ничего не найдено");
+  console.log(movie.nameRU === "Ничего не найдено");
+  console.log(movie.nameRU);
+  console.log('Ничего не найдено' !== "Ничего не найдено");
 
   const handleLike = () => {
     if (isLike) {
       deleteMovie(movie);
       setIsLike(false);
     } else {
-      saveMovie(movie);
+      saveMovie(movie, setDataSavedMovies, dataSavedMovies);
       setIsLike(true);
     }
   };
@@ -24,15 +39,15 @@ function MoviesCard({ movie, saveMovie, deleteMovie, isLiked }) {
         <img
           className="movies-card__image"
           src={
-            movie.notFound || 
-            ("https://api.nomoreparties.co" + (movie.image?.url || movie.image))
+            movie.notFound ||
+            "https://api.nomoreparties.co" + (movie.image?.url || movie.image)
           }
           alt="Кадр из фильма"
           onMouseEnter={() => setButtonClass("movies-card__button_visible")}
           onMouseLeave={() => setButtonClass("")}
         />
       </Link>
-      {!isLike && (
+      {!isLike && movie.nameRU !== "Ничего не найдено" && (
         <button
           className={`movies-card__button ${buttonClass}`}
           onClick={() => handleLike()}
@@ -47,13 +62,13 @@ function MoviesCard({ movie, saveMovie, deleteMovie, isLiked }) {
           {formatMinutes(movie.duration)}
         </span>
       </div>
-      {location.pathname === "/movies" && isLike && (
+      {location.pathname === "/movies" && isLike && movie.nameRU !== "Ничего не найдено" && (
         <button
           className="movies-card__button-saved"
           onClick={() => handleLike()}
         ></button>
       )}
-      {location.pathname === "/saved-movies" && isLike && (
+      {location.pathname === "/saved-movies" && isLike && movie.nameRU !== "Ничего не найдено" && (
         <button
           className={`movies-card__button-delete ${buttonClass}`}
           onMouseEnter={() => setButtonClass("movies-card__button_visible")}

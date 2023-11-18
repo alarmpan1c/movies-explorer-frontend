@@ -1,9 +1,19 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
+import { useLocation } from "react-router-dom";
 
 import "./MoviesCardList.css";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-function MoviesCardList({ dataMovies, saveMovie, deleteMovie, isMovieInSavedMovies }) {
+function MoviesCardList({
+  dataMovies,
+  saveMovie,
+  deleteMovie,
+  isMovieInSavedMovies,
+  setDataMovies,
+  dataSavedMovies,
+  setDataSavedMovies,
+}) {
+  const location = useLocation();
   const [displayCount, setDisplayCount] = useState(4); // Начальное количество карточек в ряду
   useEffect(() => {
     function handleResize() {
@@ -17,33 +27,67 @@ function MoviesCardList({ dataMovies, saveMovie, deleteMovie, isMovieInSavedMovi
     }
 
     handleResize(); // Установка начального значения при загрузке
-    window.addEventListener('resize', handleResize); // Слушаем изменения размера окна
+    window.addEventListener("resize", handleResize); // Слушаем изменения размера окна
 
     return () => {
-      window.removeEventListener('resize', handleResize); // Удаляем слушатель при размонтировании
+      window.removeEventListener("resize", handleResize); // Удаляем слушатель при размонтировании
     };
   }, []);
 
   const handleShowMore = () => {
-    const additionalCount = window.innerWidth >= 320 && window.innerWidth <= 720 ? 1 : window.innerWidth <= 1170 ? 2 : 3; // Количество карточек для загрузки
+    const additionalCount =
+      window.innerWidth >= 320 && window.innerWidth <= 720
+        ? 2
+        : window.innerWidth <= 1170
+        ? 2
+        : 3; // Количество карточек для загрузки
     setDisplayCount(displayCount + additionalCount);
   };
 
   return (
     <section className="movies-card-list">
       <ul className="movies-card-list__list">
-        {dataMovies.slice(0, displayCount).map((movie) => (
-          <MoviesCard
-            key={movie.id || movie.movieId}
-            movie={movie}
-            saveMovie={saveMovie}
-            deleteMovie={deleteMovie}
-            isLiked={isMovieInSavedMovies(movie)}
-          />
-        ))}
+        {dataMovies &&
+          location.pathname === "/movies" &&
+          dataMovies
+            .slice(0, displayCount)
+            .map((movie) => (
+              <MoviesCard
+                key={movie.id || movie.movieId}
+                movie={movie}
+                saveMovie={saveMovie}
+                deleteMovie={deleteMovie}
+                isLiked={isMovieInSavedMovies(movie)}
+                setDataMovies={setDataMovies}
+                dataMovies={dataMovies}
+                dataSavedMovies={dataSavedMovies}
+                setDataSavedMovies={setDataSavedMovies}
+              />
+            ))}
+            {dataMovies &&
+          location.pathname === "/saved-movies" &&
+          dataMovies
+            .map((movie) => (
+              <MoviesCard
+                key={movie.id || movie.movieId}
+                movie={movie}
+                saveMovie={saveMovie}
+                deleteMovie={deleteMovie}
+                isLiked={isMovieInSavedMovies(movie)}
+                setDataMovies={setDataMovies}
+                dataMovies={dataMovies}
+                dataSavedMovies={dataSavedMovies}
+                setDataSavedMovies={setDataSavedMovies}
+              />
+            ))}
       </ul>
-      {dataMovies.length > displayCount && (
-        <button className="movies-card-list__button-more" onClick={handleShowMore}>
+      {dataMovies && dataMovies.length > displayCount && (
+        location.pathname === "/movies" &&
+        <button
+          className="movies-card-list__button-more"
+          onClick={handleShowMore}
+          
+        >
           Ещё
         </button>
       )}

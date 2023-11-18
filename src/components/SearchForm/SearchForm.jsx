@@ -1,16 +1,27 @@
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import "./SearchForm.css";
 
 function SearchForm({
   search,
-  text,
-  setText,
+  query,
+  setQuery,
   filterCheckbox,
   setFilterCheckbox,
   changeShortMovie,
 }) {
+  // const [text, setText] = useState(localStorage.getItem("search") || "");
+
+  const location = useLocation();
+
+  const [text, setText] = useState(
+    location.pathname === "/movies"
+      ? localStorage.getItem("search") || ""
+      : ""
+  );
+
   return (
     <section className="search">
       <div className="search__container">
@@ -21,7 +32,7 @@ function SearchForm({
           onSubmit={(e) => {
             e.preventDefault();
             localStorage.setItem("search", text);
-            search();
+            location.pathname === "/movies" ? search(text) : search(query);
           }}
         >
           <input
@@ -31,9 +42,9 @@ function SearchForm({
             placeholder="Фильм"
             required
             onChange={(event) => {
-              setText(event.target.value);
+              location.pathname === "/movies" ? setText(event.target.value) : setQuery(event.target.value);
             }}
-            value={text}
+            value={location.pathname === "/movies" ? text : query}
           />
           <button className="search__button" type="submit"></button>
         </form>
