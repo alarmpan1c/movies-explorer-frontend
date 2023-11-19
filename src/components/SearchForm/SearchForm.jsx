@@ -31,7 +31,7 @@ function SearchForm({
           noValidate
           onSubmit={(e) => {
             e.preventDefault();
-            localStorage.setItem("search", text);
+            location.pathname === "/movies" && localStorage.setItem("search", text);
             location.pathname === "/movies" ? search(text) : search(query);
           }}
         >

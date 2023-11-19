@@ -18,12 +18,6 @@ function MoviesCard({
   const location = useLocation();
   const [buttonClass, setButtonClass] = useState("");
 
-  console.log(movie); 
-  console.log(!isLike && movie.nameRU !== "Ничего не найдено");
-  console.log(movie.nameRU === "Ничего не найдено");
-  console.log(movie.nameRU);
-  console.log('Ничего не найдено' !== "Ничего не найдено");
-
   const handleLike = () => {
     if (isLike) {
       deleteMovie(movie);

@@ -24,19 +24,16 @@ import lucky from "../../images/lucky.png";
 import unlucky from "../../images/unlucky.png";
 
 function App() {
-  // const [dataMovies, setDataMovies] = React.useState([]);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isLoggedIn, setIsLoggedIn] = React.useState(
     localStorage.getItem("jwt") ? true : false
   );
-  const [jwt, setJwt] = React.useState(localStorage.getItem("jwt") || "");
   const navigate = useNavigate();
   const [dataSavedMovies, setDataSavedMovies] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isResultPopupOpen, setIsResultPopupOpen] = React.useState(false);
   const [isLucky, setIsLucky] = React.useState(null);
-  // const [shortDataMovies, setShorDataMovies] = React.useState([]);
   const [shortDataSavedMovies, setShorDataSavedMovies] = React.useState([]);
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -57,6 +54,10 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        if (err === '401') {
+          setIsLucky(false);
+          setIsResultPopupOpen(true);
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -72,6 +73,10 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        if (err === '409') {
+          setIsLucky(false);
+          setIsResultPopupOpen(true);
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -91,12 +96,16 @@ function App() {
         .getInfo(token)
         .then((res) => {
           console.log(res);
-
           setCurrentUser(res);
           setIsLoggedIn(true);
         })
         .catch((err) => {
           console.log(err);
+          if (err === '401') {
+            logout();
+            setIsLucky(false);
+            setIsResultPopupOpen(true);
+          }
         });
     }
   };
@@ -106,13 +115,15 @@ function App() {
     mainApi
       .addLikeonServer(movie, localStorage.getItem("jwt"))
       .then((res) => {
-        console.log("res", res);
-        console.log("likes", likes);
-        console.log("reLike", reLike);
         reLike([...likes, res]);
       })
       .catch((err) => {
         console.log(err);
+        if (err === '401') {
+          logout();
+          setIsLucky(false);
+          setIsResultPopupOpen(true);
+        }
       })
       .finally(() => {
         // setIsLoading(false);
@@ -136,12 +147,21 @@ function App() {
     mainApi
       .deleteLikeonServer(_id, localStorage.getItem("jwt"))
       .then((res) => {
+        console.log(res);
         setDataSavedMovies(
           dataSavedMovies.filter((movie) => movie._id !== _id)
+        );
+        setShorDataSavedMovies(
+          shortDataSavedMovies.filter((movie) => movie._id !== _id)
         );
       })
       .catch((err) => {
         console.log(err);
+        if (err === '401') {
+          logout();
+          setIsLucky(false);
+          setIsResultPopupOpen(true);
+        }
       })
       .finally(() => {
         // setIsLoading(false);
@@ -151,14 +171,18 @@ function App() {
   const editProfile = ({ name, email }) => {
     setIsLoading(true);
     mainApi
-      .editInfoOnServer({ name, email }, jwt)
+      .editInfoOnServer({ name, email }, localStorage.getItem("jwt"))
       .then((res) => {
+        console.log(res);
         setCurrentUser(res);
         setIsLucky(true);
       })
       .catch((err) => {
         setIsLucky(false);
         console.log(err);
+        if (err === '401') {
+          logout();
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -192,7 +216,12 @@ function App() {
         setIsLoggedIn(true);
       })
       .catch((error) => {
+        setIsLucky(false);
         console.error(error);
+        if (error === '401') {
+          logout();
+        }
+        setIsResultPopupOpen(true);
       })
       .finally(() => {
         setIsLoading(false);
@@ -201,18 +230,7 @@ function App() {
 
   useEffect(() => {
     checkLogin();
-    // mainApi.getInfo(localStorage.getItem("jwt"))
-    // .then((res) => {
-    //   setCurrentUser(res);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
-  }, [])
-
-  // useEffect(() => {
-  //   checkLogin();
-  // }, []);
+  }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -240,6 +258,7 @@ function App() {
                     deleteMovie={deleteMovie}
                     isMovieInSavedMovies={isMovieInSavedMovies}
                     isLoading={isLoading}
+                    setIsLoading={setIsLoading}
                     dataSavedMovies={dataSavedMovies}
                     setDataSavedMovies={setDataSavedMovies}
                     // shortDataMovies={shortDataMovies}

@@ -32,7 +32,7 @@ function MoviesCardList({
     return () => {
       window.removeEventListener("resize", handleResize); // Удаляем слушатель при размонтировании
     };
-  }, []);
+  }, [dataMovies]);
 
   const handleShowMore = () => {
     const additionalCount =

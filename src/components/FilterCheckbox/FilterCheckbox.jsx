@@ -12,13 +12,12 @@ function FilterCheckbox({
       <input
         type="checkbox"
         className="filtercheckbox__input"
-        checked={filterCheckbox}
+        checked={!!filterCheckbox}
         onChange={() => {
           changeShortMovie(!filterCheckbox);
           setFilterCheckbox(!filterCheckbox);
           location.pathname === "/movies" &&
             localStorage.setItem("filterCheckbox", !filterCheckbox ? true : "");
-          // localStorage.setItem("filterCheckbox", !filterCheckbox);
         }}
       ></input>
       <span className="filtercheckbox__check"></span>

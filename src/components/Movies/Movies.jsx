@@ -13,12 +13,12 @@ function Movies({
   deleteMovie,
   isMovieInSavedMovies,
   isLoading,
+  setIsLoading,
   dataSavedMovies,
   setDataSavedMovies,
   // shortDataMovies,
   // setShortDataMovies,
 }) {
-
   const notFoundItem = {
     id: 999,
     nameRU: "Ничего не найдено",
@@ -37,16 +37,16 @@ function Movies({
     JSON.parse(localStorage.getItem("shortMovies" || []))
   );
   const [firstRender, setFirstRender] = useState(true);
-  const [dataMovies, setDataMovies] = useState(JSON.parse(localStorage.getItem("startMovies" || [])));
+  const [dataMovies, setDataMovies] = useState(
+    JSON.parse(localStorage.getItem("startMovies" || []))
+  );
   const [shortDataMovies, setShortDataMovies] = useState(
     JSON.parse(localStorage.getItem("shortStartMovies" || []))
   );
   function search(searchValue) {
-
     // Проверяем, был ли уже выполнен запрос
     if (!localStorage.getItem("startMovies")) {
-      
-      console.log("происходит загрузка");
+      setIsLoading(true);
       moviesApi
         .getMovies()
         .then((moviesResponse) => {
@@ -103,9 +103,11 @@ function Movies({
         })
         .catch((error) => {
           console.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     } else {
-      console.log("попали в else");
       // Если запрос уже был выполнен, фильтруем существующие данные
       const findShortMovies = shortDataMovies.filter((movie) => {
         return movie.nameRU.toLowerCase().includes(searchValue.toLowerCase());
@@ -113,8 +115,6 @@ function Movies({
       const findMovies = dataMovies.filter((movie) => {
         return movie.nameRU.toLowerCase().includes(searchValue.toLowerCase());
       });
-      console.log("findMovies", findMovies);
-      console.log("findShortMovies", findShortMovies);
 
       setShortMovies(
         findShortMovies.length === 0 ? [notFoundItem] : findShortMovies
@@ -133,30 +133,14 @@ function Movies({
       );
     }
   }
-  // function handleSearch(searchValue) {
-  //   filterMovies(searchValue);
-  // }
 
   function changeShortMovie(isTrue) {
-    console.log("isTrue", isTrue);
     isTrue
       ? localStorage.setItem("filterCheckbox", true)
       : localStorage.setItem("filterCheckbox", "");
     setFilterCheckbox(isTrue);
-    search(localStorage.getItem("search"));
-    console.log("localStorage", localStorage.getItem("search"))
+    search(localStorage.getItem("search") || "");
   }
-
-  // useEffect(() => {
-  //   console.log("filterCheckbox", filterCheckbox);
-  //   setFirstRender(false);
-  // }, [])
-
-  // useEffect(() => {
-  //   if (!firstRender && !localStorage.getItem("search")) {
-  //     filterCheckbox ? setShortMovies([notFoundItem]) : setMovies([notFoundItem]);
-  //   }
-  // }, [movies]);
 
   return (
     <main className="movies">

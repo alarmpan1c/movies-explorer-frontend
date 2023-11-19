@@ -23,14 +23,9 @@ function SavedMovies({
   const [movies, setMovies] = useState([]);
   const [text, setText] = useState("");
   const [filterCheckbox, setFilterCheckbox] = useState(false);
-  // console.log(dataSavedMovies);
-  // console.log(movies)
   const search = (searchValue) => {
     // setText(searchValue);
     const findShortMovies = shortDataSavedMovies
-      // .filter((movie) => {
-      //   return movie.duration < 40;
-      // })
       .filter((movie) => {
         return movie.nameRU
           .toLowerCase()
@@ -47,6 +42,7 @@ function SavedMovies({
 
   const changeShortMovie = (isFilterCheckbox) => {
     if (isFilterCheckbox) {
+      console.log("1")
       const findShortMovies = shortDataSavedMovies.filter((movie) => {
         return movie.nameRU
           .toLowerCase()
@@ -54,6 +50,7 @@ function SavedMovies({
       })
       setMovies(findShortMovies.length === 0 ? [notFoundItem] : findShortMovies);
     } else {
+      console.log("2")
       const findMovies = dataSavedMovies.filter((movie) => {
           return movie.nameRU
             .toLowerCase()
@@ -61,23 +58,20 @@ function SavedMovies({
       })
       setMovies(findMovies.length === 0 ? [notFoundItem] : findMovies);
     }
-
   };
 
-  // useEffect(() => {
-  //   console.log("dataSavedMovies", dataSavedMovies);
-  //   console.log("text", text);
-  //   console.log("filterCheckbox", filterCheckbox);
-  //   console.log("movies", movies);
-  // }, []);
-
   useEffect(() => {
-    setMovies(dataSavedMovies);
+    if (text) {
+      search(text);
+    } else {
+      if (filterCheckbox) {
+        setMovies(shortDataSavedMovies);
+      } else {
+        setMovies(dataSavedMovies);
+      }
+    // setMovies(dataSavedMovies);
+    }
   }, [dataSavedMovies]);
-
-  // useEffect(() => {
-  //   changeShortMovie();
-  // }, [filterCheckbox]);
 
   return (
     <main className="saved-movies">

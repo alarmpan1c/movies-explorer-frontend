@@ -47,7 +47,7 @@ class MainApi {
         nameEN,
         id,
       } = movie;
-    return fetch(`${this._url}/movies`, {
+    return this._request(`${this._url}/movies`, {
       method: "POST",
       headers: {
         authorization: `Bearer ${token}`,
@@ -66,9 +66,10 @@ class MainApi {
         thumbnail: `${image.formats.thumbnail.url}`,
         movieId: id
       })
-    }).then((res) => {
-      return res.json();
-    });
+    })
+    // .then((res) => {
+    //   return res.json();
+    // });
   }
   deleteLikeonServer(_id, token) {
     return this._request(`${this._url}/movies/${_id}`, {
@@ -100,7 +101,7 @@ class MainApi {
   }
 
   registration({password, email, name}) {
-    return fetch(`${this._url}/signup`, {
+    return this._request(`${this._url}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,11 +111,11 @@ class MainApi {
         email: email,
         name: name,
       }),
-    }).then((res) => this.getResponseData(res));
+    })
   }
 
   authorization({ password, email }) {
-    return fetch(`${this._url}/signin`, {
+    return this._request(`${this._url}/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +124,7 @@ class MainApi {
         password: password,
         email: email,
       }),
-    }).then((res) => this.getResponseData(res));
+    })
   }
 }
 

@@ -7,10 +7,6 @@ import "./Profile.css";
 
 function Profile({ logout, editProfile, isLoggedIn }) {
   const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser);
-
-  // const [nameIsEdited, setNameIsEdited] = useState(false);
-  // const [emailIsEdited, setEmailIsEdited] = useState(false);
 
   const [isEdited, setIsEdited] = useState(false);
   
@@ -19,7 +15,6 @@ function Profile({ logout, editProfile, isLoggedIn }) {
       name: currentUser.name || "",
       email: currentUser.email || "",
     });
-    console.log(values);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,18 +23,9 @@ function Profile({ logout, editProfile, isLoggedIn }) {
 
   const checkIsEdited = (e) => {
     handleChange(e);
-    // setIsEdited((prevIsEdited) => {
-    //   return values.name !== currentUser.name || values.email !== currentUser.email;
-    // });
-    console.log("---------------------------------------");
-    console.log("values", values);
-    console.log("isEdited", isEdited);
-    console.log("currentUser", currentUser);
-    console.log("---------------------------------------");
   };
 
   useEffect(() => {
-    console.log(currentUser);
     clearForm({
       name: currentUser.name || "",
       email: currentUser.email || "",
