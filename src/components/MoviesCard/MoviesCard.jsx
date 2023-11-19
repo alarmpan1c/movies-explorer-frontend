@@ -13,6 +13,8 @@ function MoviesCard({
   dataMovies,
   dataSavedMovies,
   setDataSavedMovies,
+  shortDataSavedMovies,
+  setShorDataSavedMovies,
 }) {
   const [isLike, setIsLike] = useState(isLiked);
   const location = useLocation();
@@ -23,7 +25,7 @@ function MoviesCard({
       deleteMovie(movie);
       setIsLike(false);
     } else {
-      saveMovie(movie, setDataSavedMovies, dataSavedMovies);
+      saveMovie(movie, setDataSavedMovies, dataSavedMovies, setShorDataSavedMovies, shortDataSavedMovies);
       setIsLike(true);
     }
   };

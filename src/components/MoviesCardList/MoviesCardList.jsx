@@ -12,7 +12,11 @@ function MoviesCardList({
   setDataMovies,
   dataSavedMovies,
   setDataSavedMovies,
+  shortDataSavedMovies,
+  setShorDataSavedMovies,
 }) {
+  console.log("shortDataSavedMovies 2", shortDataSavedMovies);
+
   const location = useLocation();
   const [displayCount, setDisplayCount] = useState(4); // Начальное количество карточек в ряду
   useEffect(() => {
@@ -62,6 +66,8 @@ function MoviesCardList({
                 dataMovies={dataMovies}
                 dataSavedMovies={dataSavedMovies}
                 setDataSavedMovies={setDataSavedMovies}
+                shortDataSavedMovies={shortDataSavedMovies}
+                setShorDataSavedMovies={setShorDataSavedMovies}
               />
             ))}
             {dataMovies &&
@@ -78,6 +84,8 @@ function MoviesCardList({
                 dataMovies={dataMovies}
                 dataSavedMovies={dataSavedMovies}
                 setDataSavedMovies={setDataSavedMovies}
+                shortDataSavedMovies={shortDataSavedMovies}
+                setShorDataSavedMovies={setShorDataSavedMovies}
               />
             ))}
       </ul>

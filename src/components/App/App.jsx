@@ -110,12 +110,17 @@ function App() {
     }
   };
 
-  const saveMovie = (movie, reLike, likes) => {
+  const saveMovie = (movie, reLike, likes, reShortLike, shortLikes) => {
     // setIsLoading(true);
     mainApi
       .addLikeonServer(movie, localStorage.getItem("jwt"))
       .then((res) => {
         reLike([...likes, res]);
+        console.log(shortLikes, res);
+        console.log(reShortLike)
+        console.log(shortLikes);
+        reShortLike([...shortLikes, res]);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -261,8 +266,8 @@ function App() {
                     setIsLoading={setIsLoading}
                     dataSavedMovies={dataSavedMovies}
                     setDataSavedMovies={setDataSavedMovies}
-                    // shortDataMovies={shortDataMovies}
-                    // setShorDataMovies={setShorDataMovies}
+                    shortDataSavedMovies={shortDataSavedMovies}
+                    setShorDataSavedMovies={setShorDataSavedMovies}
                   />
                 </ProtectedRoute>
               }
@@ -279,6 +284,7 @@ function App() {
                     isLoading={isLoading}
                     shortDataSavedMovies={shortDataSavedMovies}
                     setDataSavedMovies={setDataSavedMovies}
+                    setShorDataSavedMovies={setShorDataSavedMovies}
                   />
                 </ProtectedRoute>
               }

@@ -12,6 +12,7 @@ function SavedMovies({
   isLoading,
   shortDataSavedMovies,
   setDataSavedMovies,
+  setShorDataSavedMovies,
 }) {
   const notFoundItem = {
     id: 999,
@@ -90,6 +91,8 @@ function SavedMovies({
         dataMovies={movies.length === 0 ? dataSavedMovies : movies}
         setDataSMovies={setDataSavedMovies}
         isMovieInSavedMovies={isMovieInSavedMovies}
+        setShorDataSavedMovies={setShorDataSavedMovies}
+        shortDataSavedMovies={shortDataSavedMovies}
       />}
       <div className="saved-movies__container"></div>
     </main>

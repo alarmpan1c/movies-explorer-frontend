@@ -16,8 +16,8 @@ function Movies({
   setIsLoading,
   dataSavedMovies,
   setDataSavedMovies,
-  // shortDataMovies,
-  // setShortDataMovies,
+  shortDataSavedMovies,
+  setShorDataSavedMovies,
 }) {
   const notFoundItem = {
     id: 999,
@@ -43,6 +43,8 @@ function Movies({
   const [shortDataMovies, setShortDataMovies] = useState(
     JSON.parse(localStorage.getItem("shortStartMovies" || []))
   );
+
+  console.log("shortDataSavedMovies", shortDataSavedMovies);
   function search(searchValue) {
     // Проверяем, был ли уже выполнен запрос
     if (!localStorage.getItem("startMovies")) {
@@ -162,6 +164,9 @@ function Movies({
           setDataMovies={setDataMovies}
           dataSavedMovies={dataSavedMovies}
           setDataSavedMovies={setDataSavedMovies}
+          setShorDataSavedMovies={setShorDataSavedMovies}
+          setShortDataMovies={setShortDataMovies}
+          shortDataSavedMovies={shortDataSavedMovies}
         />
       )}
     </main>
