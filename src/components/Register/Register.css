@@ -1,4 +1,8 @@
 .register {
+    width: 100%;
+}
+
+.register__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,6 +11,8 @@
     width: 100%;
     box-sizing: border-box;
     padding: 70px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .signup {
@@ -42,7 +48,7 @@
     width: 100%;
     max-width: 396px;
     gap: 20px;
-    padding-bottom: 79px;
+    padding-bottom: 91px;
 }
 
 .register__input-container {
@@ -87,11 +93,18 @@
 }
 
 .register__input:focus {
-    background-color: #2F2F2F;
+    outline: 2px solid #3DDC84;
+    outline-offset: 2px;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.7); 
+    transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
 }
 
 .register__input:invalid {
     color: #EE3465;
+    outline: 2px solid #EE3465;
+    outline-offset: 2px;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.7); 
+    transition: outline 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
 }
 
 .register__error {
@@ -130,6 +143,10 @@
     cursor: pointer;
 }
 
+.register__button-submit_disabled {
+    background-color: #8B8B8B;
+}
+
 .register__button-submit:hover {
     opacity: 0.8;
 }
@@ -160,14 +177,22 @@
 
 @media screen and (max-width: 768px) {
     .register {
-        padding: 232px 0;
+        padding: 162px 0;
+    }
+
+    .register__form {
+        padding-bottom: 90px;
     }
 }
 
 @media screen and (max-width: 500px) {
     .register {
-        padding: 56px 0 30px;
+        padding: 0 0 30px;
         max-width: 260px;
+    }
+
+    .register__container {
+        padding: 57px 0;
     }
     
     .signup {
@@ -178,10 +203,22 @@
     }
 
     .register__form {
-        padding-bottom: 167px;
+        padding-bottom: 178px;
     }
 
     .register__buttons {
         gap: 14px;
+    }
+
+    .register__button-submit {
+        font-size: 12px;
+    }
+
+    .register__text {
+        font-size: 12px;
+    }
+
+    .register__text-link {
+        font-size: 12px;
     }
 }

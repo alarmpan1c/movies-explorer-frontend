@@ -1,19 +1,29 @@
-import './FilterCheckbox.css';
+import "./FilterCheckbox.css";
+import { useLocation } from "react-router-dom";
 
-function FilterCheckbox() {
-    
-return (
+function FilterCheckbox({
+  filterCheckbox,
+  setFilterCheckbox,
+  changeShortMovie,
+}) {
+  const location = useLocation();
+  return (
     <label className="filtercheckbox">
-        <input
-            type="checkbox"
-            className="filtercheckbox__input"
-        ></input>
-        <span
-            className="filtercheckbox__check"
-        ></span>
-        <span className="filtercheckbox__text">Короткометражки</span>
+      <input
+        type="checkbox"
+        className="filtercheckbox__input"
+        checked={!!filterCheckbox}
+        onChange={() => {
+          changeShortMovie(!filterCheckbox);
+          setFilterCheckbox(!filterCheckbox);
+          location.pathname === "/movies" &&
+            localStorage.setItem("filterCheckbox", !filterCheckbox ? true : "");
+        }}
+      ></input>
+      <span className="filtercheckbox__check"></span>
+      <span className="filtercheckbox__text">Короткометражки</span>
     </label>
-);
+  );
 }
 
 export default FilterCheckbox;

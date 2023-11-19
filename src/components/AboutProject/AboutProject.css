@@ -135,6 +135,10 @@
         width: 21%;
     }
 
+    .about-project__time {
+        margin-top: 12px;
+    }
+
     .about-project__step {
         font-weight: 400;
     }
@@ -142,7 +146,7 @@
 
 @media screen and (max-width: 420px) {
     .about-project__container {
-        padding: 70px 18px;
+        padding: 58px 18px;
     }
 
     .about-project__title {
@@ -172,6 +176,10 @@
         margin-top: 16px;
         font-size: 11px;
         line-height: 16px;
+    }
+
+    .about-project__time {
+        margin-top: 0;
     }
 
     .about-project__backend {

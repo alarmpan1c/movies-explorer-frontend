@@ -1,25 +1,78 @@
-import picCard from '../../images/pic-card.png';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import { formatMinutes } from "../../utils/helpers";
 
-import './MoviesCard.css';
+import "./MoviesCard.css";
 
-function MoviesCard() {
-    const [isLike, setIsLike] = useState(Math.random() > 0.5);
-    const location = useLocation();
-    const [buttonClass, setButtonClass] = useState("");
-return (
+function MoviesCard({
+  movie,
+  saveMovie,
+  deleteMovie,
+  isLiked,
+  setDataMovies,
+  dataMovies,
+  dataSavedMovies,
+  setDataSavedMovies,
+  shortDataSavedMovies,
+  setShorDataSavedMovies,
+}) {
+  const [isLike, setIsLike] = useState(isLiked);
+  const location = useLocation();
+  const [buttonClass, setButtonClass] = useState("");
+
+  const handleLike = () => {
+    if (isLike) {
+      deleteMovie(movie);
+      setIsLike(false);
+    } else {
+      saveMovie(movie, setDataSavedMovies, dataSavedMovies, setShorDataSavedMovies, shortDataSavedMovies);
+      setIsLike(true);
+    }
+  };
+  return (
     <li className="movies-card">
-        <img className="movies-card__image" src={picCard} alt="Кадр из фильма" onMouseOver={() => setButtonClass('movies-card__button_visible')} onMouseOut={() => setButtonClass("")}/>
-        {!isLike && <button className={`movies-card__button ${buttonClass}`} onClick={() => setIsLike(true)} onMouseOut={() => setButtonClass("")}>Сохранить</button>}
-        <div className="movies-card__info">
-            <p className="movies-card__title">33 слова о дизайне</p>
-            <span className="movies-card__time">1ч 17м</span>
-        </div>
-            {location.pathname === "/movies" && isLike && <button className="movies-card__button-saved"></button>}
-            {location.pathname === "/saved-movies" && isLike && <button className={`movies-card__button-delete ${buttonClass}`} onMouseOut={() => setButtonClass("")}></button>}
+      <Link to={movie.trailerLink} target="_blank">
+        <img
+          className="movies-card__image"
+          src={
+            movie.notFound ||
+            "https://api.nomoreparties.co" + (movie.image?.url || movie.image)
+          }
+          alt="Кадр из фильма"
+          onMouseEnter={() => setButtonClass("movies-card__button_visible")}
+          onMouseLeave={() => setButtonClass("")}
+        />
+      </Link>
+      {!isLike && movie.nameRU !== "Ничего не найдено" && (
+        <button
+          className={`movies-card__button ${buttonClass}`}
+          onClick={() => handleLike()}
+          onMouseEnter={() => setButtonClass("movies-card__button_visible")}
+        >
+          Сохранить
+        </button>
+      )}
+      <div className="movies-card__info">
+        <p className="movies-card__title">{movie.nameRU}</p>
+        <span className="movies-card__time">
+          {formatMinutes(movie.duration)}
+        </span>
+      </div>
+      {location.pathname === "/movies" && isLike && movie.nameRU !== "Ничего не найдено" && (
+        <button
+          className="movies-card__button-saved"
+          onClick={() => handleLike()}
+        ></button>
+      )}
+      {location.pathname === "/saved-movies" && isLike && movie.nameRU !== "Ничего не найдено" && (
+        <button
+          className={`movies-card__button-delete ${buttonClass}`}
+          onMouseEnter={() => setButtonClass("movies-card__button_visible")}
+          onClick={() => handleLike()}
+        ></button>
+      )}
     </li>
-);
+  );
 }
 
 export default MoviesCard;

@@ -38,8 +38,4 @@
 
 .navigation__link_active {
     font-weight: 500;
-    text-decoration: none;
-    color: #fff;
-    font-size: 13px;
-    line-height: 18px;
 }

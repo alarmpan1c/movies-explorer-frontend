@@ -14,12 +14,11 @@
 
 .movies-card__info {
     display: flex;
-    flex-direction: space-between;
     align-items: center;
     max-width: 360px;
     margin: 0;
     padding: 0;
-    padding-top: 14px;
+    padding-top: 12px;
     gap: 30px;
 }
 
@@ -112,6 +111,14 @@
     .movies-card__info {
         padding-top: 25px;
     }
+
+    .movies-card__button-delete {
+        visibility: visible;
+    }
+
+    .movies-card__button {
+        visibility: visible;
+    }
 }
 
 @media screen and (max-width: 570px) {
@@ -126,6 +133,15 @@
 
     .movies-card__info {
         max-width: 300px;
-        padding-top: 16px;
+        padding-top: 15px;
+    }
+
+    .movies-card__button-saved {
+        top: 10px;
+        right: 10px;
+    }
+
+    .movies-card__title {
+        font-size: 12px;
     }
 }

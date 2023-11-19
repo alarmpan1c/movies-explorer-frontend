@@ -25,15 +25,18 @@
     border-radius: 10px;
     background: #272727;
     padding-bottom: 0;
+    width: 100%;
 }
 
 .promo__title {
     font-weight: 400;
     font-size: 50px;
     line-height: 58px;
+    letter-spacing: -2px;
     margin: 0;
-    padding: 160px 235px 151px;
+    padding: 160px 0 151px;
     text-align: center;
+    max-width: 730px;
 }
 
 .promo__links {
@@ -105,6 +108,12 @@
     }
 }
 
+@media screen and (max-width: 768px) {
+    .promo__title {
+        max-width: 680px;
+    }
+}
+
 @media screen and (max-width: 720px) {
     .promo__title {
         padding: 350px 30px 314px;
@@ -131,6 +140,7 @@
     }
     .promo__title {
         padding: 220px 0 212px;
+        max-width: 292px;
     }
 }
 
